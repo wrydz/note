@@ -1,0 +1,133 @@
+          Linux下Tomcat的安装配置
+
+一.下载安装对应的jdk,并配置Java环境。
+
+官网下载地址：
+
+http://www.oracle.com/technetwork/java/javase/downloads/jdk-6u26-download-400750.html
+
+下载将jdk加压后放到/usr/local目录下：
+
+ [root@master ~]#chmod jdk1.7.0_65
+
+[root@master ~]#mv jdk1.7.0_65 /usr/local
+
+ 
+
+建立/usr/local/下的jdk软连接方便以后版本升级 ：
+
+ [root@master ~]# ln -s /usr/local/jdk1.7.0_65/ /usr/local/jdk
+
+ 
+
+配置环境变量：
+
+在 /etc/profile 中加入以下内容
+JAVA_HOME=/usr/local/jdk1.7.0_65
+JAVA_BIN=/usr/local/jdk1.7.0_65/bin
+PATH=$PATH:$JAVA_BIN
+CLASSPATH=$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export JAVA_HOME JAVA_BIN PATH CLASSPATH
+
+保存退出
+
+[root@master ~]source /etc/profile
+
+ 
+
+查看java环境变量是否生效
+
+[root@TESTEDW conf]# java -version
+java version "1.7.0_65"
+Java(TM) SE Runtime Environment (build 1.7.0_65-b17)
+Java HotSpot(TM) 64-Bit Server VM (build 24.65-b04, mixed mode)
+
+测试成功
+
+二．下载安装tomcat（http://tomcat.apache.org/）
+
+[root@zhanglin ~]# tar -zxvf apache-tomcat-8.0.15.tar.gz
+[root@zhanglin ~]# mv apache-tomcat-8.0.15/ /usr/local/tomcat8.0
+[root@zhanglin ~]cd /usr/local/
+[root@zhanglin local]# ln -s /usr/local/tomcat8.0/ /usr/local/tomcat
+[root@zhanglin local]# cd tomcat/bin/
+[root@zhanglin bin]#ls
+[root@zhanglin bin]#vim catalina.sh
+
+添加以下内容：
+
+CATALINA_HOME=/usr/local/tomcat8.0/
+
+[root@zhanglin local]#chmod +x *.sh
+
+三．启动tomcat服务器
+
+[root@TESTEDW bin]# ./startup.sh
+Using CATALINA_BASE:   /usr/local/tomcat8.0
+Using CATALINA_HOME:   /usr/local/tomcat8.0
+Using CATALINA_TMPDIR: /usr/local/tomcat8.0/temp
+Using JRE_HOME:        /usr/local/jdk1.7.0_65
+Using CLASSPATH:       /usr/local/tomcat8.0/bin/bootstrap.jar:/usr/local/tomcat8.0/bin/tomcat-juli.jar
+Tomcat started.
+
+四．在浏览器中输入
+
+http://localhost:8080/（如果不是本机，则输入对应的ip地址）
+
+测试出现tomcat页面则测试成功
+
+ps：需要说明的是tomcat的默认测试页面是放在webapps下面，这个其实是在server.xml文件中配置的，如下所示：
+
+<Host name="localhost"  appBase="webapps"
+            unpackWARs="true" autoDeploy="true"
+            xmlValidation="false" xmlNamespaceAware="false">
+
+[root@SOR_SYS tomcat8.0]# ls
+LICENSE  NOTICE  RELEASE-NOTES  RUNNING.txt  bin  conf  lib  logs  temp  webapps  work
+        1)webapps文件夹主要用于web应用程序部署，比如你可以把你的应用程序包，如war文件拷到该目录下，容器会自动部署。
+　　2)conf文件夹下主要是放置tomcat的服务器的相关配置文件
+
+ 
+
+五。添加应用，再次进行测试
+
+在webapps目录下放测试包（注意：webaapps目录下面主要是放应用包的.war在tomcat重启访问后会自动解压）
+
+[root@master webapps]# pwd
+/usr/local/tomcat/webapps
+
+[root@master webapps]# tar -zxvf moni2.tar.gz
+
+[root@master webapps]# ls
+docs  examples  host-manager  manager  moni2  moni2.tar.gz  ROOT
+
+[root@master webapps]# /usr/local/tomcat/bin/catalina.sh start（重启tomcat）
+Using CATALINA_BASE:   /usr/local/apache-tomcat-6.0.30/
+Using CATALINA_HOME:   /usr/local/apache-tomcat-6.0.30/
+Using CATALINA_TMPDIR: /usr/local/apache-tomcat-6.0.30//temp
+Using JRE_HOME:        /usr/local/jdk1.6.0_05
+Using CLASSPATH:       /usr/local/apache-tomcat-6.0.30//bin/bootstrap.jar
+
+在浏览器中输入如下地址：
+
+http://172.17.209.149:8080/moni2/
+
+
+ 六。修改tomcat的监听端口
+
+[root@master ~]#  cd  /usr/local/tomcat/conf
+
+[root@master ~]# ls
+
+[root@master ~]# vim server.xml
+
+<Server port="8005" shutdown="SHUTDOWN">【停止tomcat时的端口】
+
+ <Connector port="8081" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" /> 【tomcat默认的监听端口是8080，现在改成8081】
+
+ <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />【apache+tomcat模式时访问tomcat的端口】
+
+现在重启tomcat。访问http://192.168.55.229:8081/moni2/【注意：这时就需要修改端口了，嘿嘿。。。】 
+

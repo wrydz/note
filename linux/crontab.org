@@ -1,0 +1,17 @@
+1.修改crontab默认编辑器
+  select-editor
+2.列出当前crontab
+  crontab -l
+3.删除当前日程列表
+  crontab -r
+4.编辑日程列表
+  crontab -e
+5.执行结果发送到
+  /var/spool/wrydz
+
+
+
+
+alter table tmp_httpweb_grid_d add partition(year=2015,month=201505,day=20150516) location '/sc/3g/httpweb_grid/20150516';
+
+alter table tmp_video_grid_d add partition(year=2015,month=201505,day=20150516) location '/sc/3g/video_grid/20150516';

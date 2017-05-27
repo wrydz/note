@@ -1,0 +1,6 @@
+#+TITLE: LINUX COMMAND
+
+| command        | description      |
+|----------------+------------------|
+| lsb_release -a | 查看系统版本信息 |
+|                |                  |

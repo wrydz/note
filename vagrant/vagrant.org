@@ -1,0 +1,52 @@
+#+TITLE: vagrant
+
+* 安装
+
+* 插件
+
+** hostmanager
++ 安装
+#+BEGIN_SRC shell
+  vagrant plugin install vagrant-hostmanager
+#+END_SRC
++ 配置
+#+BEGIN_SRC ruby
+  # 开启插件
+  config.hostmanager.enabled = true
+  # 更新虚拟机host
+  config.hostmanager.manage_guest = true
+  # 更新宿主机host
+  config.hostmanager.manage_host = true
+#+END_SRC
++ 使用
+#+BEGIN_SRC shell
+  vagrant hostmanager
+#+END_SRC
+
+** vbguest
++ 安装
+#+BEGIN_SRC shell
+  vagrant plugin install vagrant-vbguest
+#+END_SRC
++ 配置
+#+BEGIN_SRC ruby
+  # 关闭自动检查更新
+  config.vbguest.auto_update = false
+#+END_SRC
++ 使用
+#+BEGIN_SRC shell
+  # 查看虚拟机安装guest状态
+  vagrant vbguest --status
+  # 指定vm_name安装guest
+  vagrant vbguest --do install vm_name
+  # help
+  vagrant vbguest --help
+
+#+END_SRC
+* box
+** 打包
+1. 查询虚拟机名称
+ =vboxmanage list vms=
+
+2. 进入到vagrant工作目录
+ =vagrant package --base vbox_name --output name.box=

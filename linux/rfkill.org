@@ -1,0 +1,16 @@
+无线网卡开启的时候，出现
+
+SIOCSIFFLAGS: Operation not possible due to RF-kill
+
+说明网卡被 rfkill 关闭了 rfkill是linux下的一个软件，它为了省电会关闭网卡，蓝牙等软件
+
+
+首先查看那些软件被托管了 
+
+rfkill list 
+
+之后解锁
+
+rfkill unblock all      是解锁所有
+
+rfkill unblock  num      解锁某一个

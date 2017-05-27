@@ -1,0 +1,9 @@
+#+TITLE: centos7部署kettle
+
+* centos7配置
+** jdk
+** 依赖
+#+BEGIN_SRC shell
+  yum install epel-release
+  yum install webkitgtk
+#+END_SRC

@@ -1,0 +1,58 @@
+
+解决分区挂载时出现“Not authorized to perform operation“的问题  
+
+2012-06-03 13:29:33|  分类： Linux |  标签：挂载  linux   |举报 |字号 订阅
+命令如下：
+
+su
+cd /etc/polkit-1/localauthority/50-local.d/
+
+leafpad（你的文件编辑器） 50-filesystem-mount-system-internal.pkla
+
+    文件内：
+    [Mount a system-internal device]
+    Identity=*
+    Action=org.freedesktop.udisks2.filesystem-mount-system
+    ResultActive=yes
+
+立即生效。
+Update 2012-12-8：这个方法有时好像不太管用，另一种方法：
+编辑
+/usr/share/polkit-1/actions/org.freedesktop.udisks.policy 和 org.freedesktop.udisks2.policy
+org.freedesktop.udisks.policy:
+
+  <action id="org.freedesktop.udisks.filesystem-mount">
+    <description>Mount a device</description>
+    <description xml:lang="da">Montér en enhed</description>
+    <message>Authentication is required to mount the device</message>
+    <message xml:lang="da">Autorisering er p?kr?vet for at montere et fil system</message>
+    <defaults>
+      <allow_any>yes</allow_any>
+      <allow_inactive>yes</allow_inactive>
+      <allow_active>yes</allow_active>
+    </defaults>
+  </action>
+
+
+后面的内容不要改动（另一个文件也是）
+org.freedesktop.udisks2.policy:
+
+<action id="org.freedesktop.udisks2.filesystem-mount">
+    <description>Mount a filesystem</description>
+    <message>Authentication is required to mount the filesystem</message>
+    <defaults>
+      <allow_any>yes</allow_any>
+      <allow_inactive>yes</allow_inactive>
+      <allow_active>yes</allow_active>
+    </defaults>
+  </action>
+
+  <action id="org.freedesktop.udisks2.filesystem-mount-system">
+    <description>Mount a filesystem on a system device</description>
+    <message>Authentication is required to mount the filesystem</message>
+    <defaults>
+      <allow_any>yes</allow_any>
+      <allow_inactive>yes</allow_inactive>
+      <allow_active>yes</allow_active>
+    </defaults>
+  </action>

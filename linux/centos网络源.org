@@ -1,0 +1,68 @@
+#+TITLE:网络yum源的建立
+
+* 背景
+在无外网的局域网内，若有多台服务器需要配置yum源，可行的方案是在其中一台机器上建立yum源并
+通过httpd服务共享给其他服务。
+
+* 挂载iso
+#+BEGIN_SRC shell
+  mount -o loop xxx.iso /mnt
+#+END_SRC
+
+* 创建本地仓库
+#+BEGIN_SRC shell
+  # 1.创建仓库目录
+  mkdir -p /usr/local/yumrepo/6
+  # 2.复制包到仓库
+  cp /mnt/Packages/* /usr/local/yumrepo/6
+  cp /mnt/RPM-GPG-KEY* /usr/local/yumrepo
+  # 3.创建仓库
+  createrepo -v /usr/local/yumrepo
+#+END_SRC
+
+* 设置httpd服务
+使用apache的httpd服务
+#+BEGIN_SRC shell
+  # 1.修改httpd配置文件
+  vim /etc/httpd/conf/httpd.conf
+
+  DocumentRoot "/usr/local/yumrepo"
+  <Directory "/usr/local/yumrepo">
+  ServerName localhost:80
+
+  # 2.改变仓库属主和属组
+  chown -R apache:apache /usr/local/yumrepo
+
+  # 3.删除默认首页显示
+  rm -rf /etc/httpd/conf.d/welcome.conf
+#+END_SRC
+
+* 配置repo文件
+** 本地配置
+#+BEGIN_SRC shell
+  [base]
+  name=localyum
+  baseurl=file:///usr/local/yumrepo/6
+  gpgcheck=0
+  gpgkey=file:///usr/local/yumrepo/RPM-GPG-KEY-CentOS-6
+
+  [updates]
+  name=localyum
+  baseurl=file:///usr/local/yumrepo/6
+  gpgcheck=0
+  gpgkey=file:///usr/local/yumrepo/RPM-GPG-KEY-CentOS-6
+#+END_SRC
+** 局域网配置
+#+BEGIN_SRC shell
+  [base]
+  name=localyum
+  baseurl=http://192.168.33.1/6
+  gpgcheck=0
+  gpgkey=http://192.168.33.1/RPM-GPG-KEY-CentOS-6
+
+  [updates]
+  name=localyum
+  baseurl=http://192.168.33.1/6
+  gpgcheck=0
+  gpgkey=http://192.168.33.1/RPM-GPG-KEY-CentOS-6
+#+END_SRC

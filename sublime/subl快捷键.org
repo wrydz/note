@@ -1,0 +1,11 @@
+#+TITLE: SUBLIME 使用技巧
+#+AUTHOR: WRYDZ
+#+EMAIL:wrydzfiying@163.com
+
+* sublime的一些常用快捷键
+  - CTRL + L 选中一行
+  - CTRL + D 选中一个单词，若多按几次，则选中多个相同的词，可同时编辑
+  - CTRL + SHIFT + P 调出命令面板
+  - CTRL + T 列出所有的标签页
+  - CTRL + SHIFT + 】 下一标签页
+  - CTRL + SHIFT + 【 上一标签页

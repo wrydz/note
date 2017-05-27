@@ -1,0 +1,21 @@
+Debian 系统下 关闭SElinux服务
+
+先安装控制软件：
+#apt-get update
+#apt-get install -y selinux-utils
+#apt-get install -y setools
+
+
+当前系统中，立即关闭SElinux服务：
+#/usr/sbin/setenforce 0
+
+
+检查是否已经 成功 关闭服务：
+#getenforce
+
+
+将关闭语句写入 启动文件中：
+#vim /etc/rc.local
+在 exit 0 上面插入一句：
+/usr/sbin/setenforce 0
+存盘，退出！！

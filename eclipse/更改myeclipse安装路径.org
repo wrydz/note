@@ -1,0 +1,7 @@
+要更该myeclipse2014的安装路径
+分三个步骤：
+一：把myeclipse的安装文件夹整体拷贝到目标路径
+二：修改安装目录下myeclipse.ini
+   install
+三：修改configuration下的config.ini
+   directory=

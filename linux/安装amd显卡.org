@@ -1,0 +1,2 @@
+sudo apt-get install module-assistant build-essential
+sudo apt-get install fakeroot dh-make debconf libstdc++5 linux-headers-$(uname -r)

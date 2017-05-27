@@ -1,0 +1,10 @@
+#+TITLE: 局域网之间传送大文件
+
+
+在没有u盘的情况下如何传送大文件。
+这里提供一种方法。
+
+首先安装python环境，通过下面命令建议一个简单的http服务，即可在其他浏览器通过ip：8000访问到此电脑。
+#+BEGIN_SRC shell
+  python -m SimpleHTTPServer
+#+END_SRC

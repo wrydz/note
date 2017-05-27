@@ -1,0 +1,34 @@
+#+TITLE: shell中的循环
+在shell中我们经常会使用到循环的概念，那么在这里有几种实现方式。
+现在有一个文件file，文件中的内容是
+aaa
+bbb ccc
+ddd
+我们要遍历文件的每一行
+1.
+  cat file | while read line
+  do
+     echo $line
+  done
+  运行结果是：
+  aaa
+  bbb ccc
+  ddd
+
+2.
+  while read line
+  do
+    echo $line
+  done < file
+  运行结果是：同上
+
+3.
+  for line in `cat file`
+  do
+    echo $line
+  done
+  运行结果是：
+  aaa
+  bbb
+  ccc
+  ddd

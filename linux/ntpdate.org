@@ -1,0 +1,11 @@
+linux中更新时间，可以用ntpdate
+国家时间同步中心 IP：210.72.145.44
+             HOST：cn.pool.ntp.org
+
+命令：ntpdate -u ip|host
+
+注：可能要等10来分钟，再执行此命令。
+
+更改系统时间按也可以用 date
+
+date -s 20150920

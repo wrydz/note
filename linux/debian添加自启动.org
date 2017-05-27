@@ -1,0 +1,20 @@
+#+TITLE: DEBIAN添加自启动
+
+* 方式一
+在 /etc/rc.local 文件中，在 exit 0 前添加执行的脚本，重启即可。
+（不过我没的成功）
+* 方式二
+把自启动脚本复制到 /etc/init.d/ 目录下，给脚本赋权
+#+BEGIN_SRC shell
+  sudo chmod 755 xxx.sh
+#+END_SRC
+在脚本中需要加入LSB tags,在 /etc/init.d/README 中有其模板。
+
+此时运行命令添加软链接到 rcx.d
+#+BEGIN_SRC shell
+  sudo update-rc.d xxxx.sh defaults 95
+#+END_SRC
+卸载启动脚本方法
+#+BEGIN_SRC shell
+  sudo update-rc.d -f xxxx.sh remove
+#+END_SRC

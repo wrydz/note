@@ -1,0 +1,114 @@
+时间管理：
+remind + wyrd （强烈推荐！！！语法强大！）
+task （强烈推荐！！！GTD工具）
+
+收信和读信：
+mutt + postfix
+
+记帐还有画表格做记忆卡片：
+sc
+awk
+gnumeric
+
+作笔记和读书：
+gvim
+emacs (这个少用，还没设定好）
+texmacs
+abiword
+xournal (强烈推荐！！！记忆体够大的话，可以用它取代看pdf的软件，速度超快的。）
+djview4
+texlive
+djvulibre （做djvu转档很方便）
+poppler （有时pdf用这个处理）
+
+
+画思维导图和看图和处理图片：
+gimp
+freemind
+gqview
+netpbm
+imagemagick
+
+备份找档档案管理：
+zsh
+thunar （强烈推荐！！！轻快，但该有的功能全有）
+ranger （强烈推荐！！！）
+screen
+recoll
+tar + find + gzip + rsync ... 等等等。
+cdargs (强烈推荐！！！)
+tree
+
+
+
+系统环境：
+subtle + xbindkeys + parcellite + scim + xclip
++ devilspie + wmctrl + xfce-utils
++ urxvt + xterm + trayer + tint2 + xsel
+
+
+字典翻译拼写检查：
+dictd
+stardict
+ispell
+aspell
+languagetool
+rhyme
+
+上网：
+firefox + vimpeator
+
+
+计算：
+octave
+
+
+娱乐含影片处理跟转换：
+mplayer
+ffmpeg
+lame
+mac
+flac
+shntool + cuetool
+recordmydesktop
+
+
+通讯录：
+abook
+
+
+
+聊天之类的：
+irssi
+centerim
+
+
+
+读 rss feed：
+newsbeuter
+
+p2p下载和抓网站和ftp：
+mldonkey
+wget
+aria2c
+lftp
+
+游戏：
+nexuiz
+
+
+保护我的眼睛：
+source-highlight
+vimpager
+less
+multitail
+
+
+转本文：
+convmv
+hd2u
+
+屏幕颜色吸取工具
+gcolor2
+KColorChooser
+gimp

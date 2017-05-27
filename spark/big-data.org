@@ -1,0 +1,8 @@
+
+* spark
+
+* sparkSql
+** 守护进程
+python /home/mr/bin/spark/sparksql_watchdog.py start
+** sparkSql进程
+ps -ef | grep thriftserver

@@ -1,0 +1,26 @@
+﻿1. 安装sudo apt-get install hwinfo
+      sudo hwinfo --framebuffer
+
+   修改配置文件：
+        grub2则是修改/etc/grub.d/里面的脚本。里面的脚本过于深奥，我稍微查看了       一下，改分辨率的方法是修改/etc/default/grub的内容：
+       GRUB_CMDLINE_LINUX="vga=792"
+    注意要注释掉:
+
+# GRUB_TERMINAL=console
+
+默认这一行是注释掉的，不然vga就没用了。
+
+做完调用:
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+刷新一下配置
+
+顺便改掉恶心的debian字体，换成已经习惯了的vga字体。方法是修改/etc/default/console-setup:
+
+注释掉以下两行：
+
+#FONTFACE="Fixed"
+#FONTSIZE="16"
+
+重启搞定。  

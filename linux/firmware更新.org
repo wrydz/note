@@ -1,0 +1,6 @@
+update-initramfs
+
+关于 firmware failed to load   的问题 
+
+
+安装   apt-get install firmware-realtek

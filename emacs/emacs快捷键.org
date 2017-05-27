@@ -1,0 +1,9 @@
+#+TITLE: spacemacs中常用的快捷键
+
+| keybinding | functions                | means                                                 |
+|------------+--------------------------+-------------------------------------------------------|
+| SPC ?      | counsel-descbinds        | show a list of all defined keys,and their definitions |
+| SPC h d b  | counsel-descbinds        | show a list of all defined keys,and their definitions |
+| SPC h k    | which-key-show-top-level | show top-level bindings                               |
+| , R        | org-refile               | move the entry or entries at point to another heading |
+| SPC C c    | org-capture              | capture somethings                                    |

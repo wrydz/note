@@ -1,0 +1,32 @@
+在命令行中安装postgresql
+
+sudo apt-get install postgresql-9.4
+sudo apt-get install pgadmin3
+
+服务器基本设置
+[编辑]启动
+sudo /etc/init.d/postgresql-8.4 start(10.04下安装的postgresql默认是8.4，若是10.10，则不用加版本号)
+sudo /etc/init.d/postgresql-8.4 stop
+[编辑] 设置密码
+安装完毕，我们需要更改postgres用户的密码，否则我们就没法使用这个数据库服务器。以postgres这个系统用户的身份运行psql命令，在终端中输入如下：
+
+sudo su postgres -c psql template1
+这时候会出现新的提示符，输入下面两个命令，用新密码替换 <***password***>：
+
+ALTER USER postgres WITH PASSWORD ' <***password***> ';
+[编辑] 设置 postgres 用户的密码
+sudo passwd postgres
+而后输入自己的密码
+
+[编辑] 创建数据库
+创建第一个数据库，我们把它命名为"mydb"，先输入：
+
+su  postgres
+转入 postgres 用户.
+
+用这样的方试会报错
+
+sudo su postgres -c createdb mydb
+转为 postgres 用户登陆后,执行
+
+createdb mydb

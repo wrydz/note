@@ -1,0 +1,7 @@
+1、修改/etc/inittab 文件。
+
+将 id:5:default 改成 id:3:default
+
+2、禁用gdm
+
+将/etc/rc3.d 下的文件S19gdm3 命名为S19gdm3.bak（在此目录下的READEME 文件，建议我们命名为K19gdm3。其中K是Kill的意思）。

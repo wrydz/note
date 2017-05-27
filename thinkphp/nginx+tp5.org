@@ -1,0 +1,59 @@
+#+TITLE: nginx+thinkphp5
+
+* lnmp
+
+* nginx
+** 缓存文件
+开发时，修改文件在浏览器不能及时更新，是由于服务器缓存造成的。修改配置文件
+#+BEGIN_SRC shell
+  vim /usr/local/nginx/conf/nginx.conf
+
+  sendfile off;
+#+END_SRC
+** 跨域访问
+在nginx.conf中的http中添加如下代码
+#+BEGIN_SRC shell
+  add_header Access-Control-Allow-Origin *;
+#+END_SRC
+** tp5的url重写
+使用tp5框架时，因nginx不直接支持pathinfo，需要修改配置文件
+#+BEGIN_SRC shell
+  vim /usr/local/nginx/conf/nginx.conf
+
+  # 在server中
+  location  /youdomain/ {
+      if  (!-e  $request_filename){
+              rewrite   ^/youdomain/(.*)$   /youdomain/index.php?s=/$1    last;
+          }
+  }
+#+END_SRC
+** pathinfo开启
+#+BEGIN_SRC shell
+  # 修改
+  include enable-php.conf;
+  # 为
+  include enable-php-pathinfo.conf;
+#+END_SRC
+* tp5
+
+** composer
+
+*** 安装
+#+BEGIN_SRC shell
+  curl  -sS https://getcomposer.org/installer | php
+  mv  composer.phar /usr/local/bin/composer
+
+  # 引入国内源
+  composer config repo.packagist composer https://packagist.phpcomposer.com
+#+END_SRC
+
+*** 创建tp5项目
+#+BEGIN_SRC shell
+  composer  create-project  topthink/think  tp5   --prefer-dist
+#+END_SRC
+
+*** 引入三方包
+#+BEGIN_SRC shell
+  composer require phpoffice/phpexcel
+#+END_SRC
+

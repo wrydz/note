@@ -1,0 +1,171 @@
+#+TITLE:虚拟机扩容
+
+
+
+* 前言
+由于创建虚拟机时磁盘空间设定过小,使用一段时间后空间不够.这时就需要给虚拟磁盘扩容.本文针对vbox操作,对vm应该也是同样道理
+
+* 磁盘格式转换
+在创建虚拟机时,为了能兼容vm,很多选择vmdk格式的磁盘,但vbox必须要vdi格式才能扩容.
+#+BEGIN_SRC shell
+  # path.vmdk 是需要转换的磁盘路径
+  # path.vdi 是转换后的磁盘路径
+  vboxmanager cloned path.vmdk path.vdi --format vdi
+  # window系统需要进入到vbox安装目录
+  VBoxManager.ext cloned path.vmdk path.vdi --fromat vdi
+#+END_SRC
+
+* 磁盘扩容
+扩容分为两步,一为磁盘重新设置size,二为使新增空间生效
+** 重置磁盘大小
+修改虚拟机配置信息,在设置->存储->控制器中删除原有磁盘,选择vdi格式的磁盘->保存.
+#+BEGIN_SRC shell
+  # 读取磁盘uuid
+  vboxmanager list hdds
+  # 选择vdi格式的磁盘 单位M
+  vboxmanager modifyhd uuid --resize 51200
+#+END_SRC
+** 挂载新增容量
+磁盘扩容后,系统并没有识别出来,需要进入系统设置.此时有两种方式
+*** 作为新硬盘挂载
+1. 查看系统硬盘并创建分区
+#+BEGIN_SRC shell
+  df -h
+  sudo fdisk /dev/sda
+  p # 查看分区列表
+  n # 创建分区
+  p # 创建主分区
+  w # 保存修改
+#+END_SRC
+2. 格式化并挂载
+#+BEGIN_SRC shell
+  # 格式化分区
+  mkfs -t ext4 /dev/sda3
+  # 挂载分区
+  mount /dev/sda3 /mount_path
+  # 开机自动挂载
+  vim /etc/fstab
+  /dev/sda3 /mount_path ext4 defaults 0 1
+#+END_SRC
+*** 合并新分区
+
+
+
+
+
+* 通过查阅相关资料，VBox中linux扩容主要有两种办法：通过lvm扩容和通过gparted扩容
+
+LVM条件：VBox中的linux系统使用LVM管理磁盘
+
+gparted条件：自带gparted的linux系统映像（ISO）
+
+判断能否通过lvm扩容：
+
+　　终端输入“vgs”，显示“No volume groups found”则不能使用lvm扩容
+
+　　显示如下则可以使用lvm扩容：
+
+VG #PV #LV #SN Attr VSize VFree xiaoluo 2 0 0 wz--n- 15.99g 15.99g
+通过LVM扩容
+
+　　关于LVM的基本知识可以参考以下两篇文章，只按照本文操作可以顺利完成
+
+　　　　LVM逻辑卷基本概念及LVM的工作原理
+
+　　　　LVM逻辑卷的创建及使用
+　　第一步：添加虚拟硬盘
+
+　　　　关闭虚拟机，在虚拟机的设置界面，选择“存储”选项卡，点击“添加虚拟硬盘”图标
+
+　　　　按提示完成添加即可。
+　　第二步：为新硬盘分区并格式化
+
+　　　　添加新硬盘后在终端中键入"fdisk -l"即可看到新添加的硬盘，我这里显示为“/dev/sdb”
+
+　　　　键入“fdisk /dev/sdb”开始对新硬盘分区
+
+　　　　在新的命令行中键入“n”创建新分区
+
+　　　　直接回车作为主分区
+
+　　　　键入分区数字，或直接回车默认1
+
+　　　　回车默认从2048作为此分区的开始扇区
+
+　　　　回车默认最后扇区作为结束扇区
+
+　　　　键入“w”保存并退出，现在得到/dev/sdb1分区，建议重启以下虚拟机
+　　第三步：将新分区添加到lvm并扩容
+
+　　　　键入“pvcreate /dev/sdb1”
+
+　　　　　　Physical volume “/dev/hda4″ successfully created
+
+　　　　键入“vgs”查看卷组名，如“xiaoluo”或“VolGroup00”
+
+　　　　键入“vgextend VolGroup00 /dev/sdb1”将新分区添加到卷组中去
+
+　　　　键入“lvs”查看要扩容的逻辑卷名称，如"LogVol00"
+
+　　　　键入“lvextend -L +4096M /dev/VolGroup00/LogVol00”扩展逻辑分区，其中“+4096M”表示增加4G空间
+
+　　　　键入“resize2fs -p /dev/VolGroup00/LogVol00”激活新空间
+
+　　　　现在键入“df -h”即可查看扩容后的空间
+通过gparted扩容
+　　第一步：将vmdk格式虚拟硬盘转为vdi格式
+
+　　　　（如果你的虚拟硬盘是vdi格式请跳到第二步）
+
+　　　　找到Vbox的安装目录并进入cmd界面，我的是：H:\Program Files\Oracle\VirtualBox
+
+　　　　键入“VBoxManage list hdds”查看现有的虚拟硬盘，找到要扩容的虚拟机的虚拟硬盘，记录下位置
+
+　　　　键入 VBoxManage clonehd "H:\Users\liber\VirtualBox VMs\kali_iso\-disk1.vmdk" "H:\Users\liber\VirtualBox VMs\kali_iso\-disk1.vdi" --format vdi 将vmdk转化为vdi
+
+　　　　然后在虚拟机的设置中将旧的vmdk卸载并挂在新的vdi即可
+　　第二步：扩容vdi格式虚拟硬盘
+
+　　　　键入“VBoxManage list hdds”查看要扩容的vdi文件的UUID并记录
+
+　　　　键入“VBoxManage modifyhd 你的uuid --resize 40960”将其扩容为40G，其中40960表示新的大小
+　　第三步：扩容linux根分区
+
+　　　　在虚拟机的设置界面，选择“存储”选项卡，点击“添加虚拟光驱”，点击“选择磁盘”浏览linux的iso文件，我这里是kali-linux-1.1.0a-amd64.iso，然后确定
+
+　　　　　　（这里如果有空的虚拟光驱要删除，否则启动的时候不会从光驱启动）
+
+　　　　在“系统选项卡”将光驱调整为最优先启动
+
+　　　　从虚拟光驱启动虚拟机，选择LiveCD模式，我这里是“Live (amd64)”，这种模式是不安装，仅体验
+
+　　　　进入系统后在终端中输入gparted就会启动gparted的图形化界面
+
+　　　　现在硬盘结构应该如下所示：
+
+　　　　　　/dev/sda
+
+　　　　　　　　|---/dev/sda1   (ext4，要扩容)
+
+　　　　　　　　|---/dev/sda2   (extended，885M)
+
+　　　　　　　　|　　　|---/dev/sda5   (linux-swap，885M)
+
+　　　　　　　　|---unallocated   (unallocated，待分配)
+
+　　　　unallocated就是我们未分配空间，/dev/sda2是linux中的虚拟内存，在大型程序无法一次装入内存的时候使用的
+
+　　　　我们可以先删除/dev/sda5，然后删除/dev/sda2。然后就只剩下要扩容分区和未分配空间了
+
+　　　　右击要扩容分区，选择resize即可进行扩容，但是注意这里要留下一部分空间作为linux-swap分区作为虚拟内存
+　　　　　　
+
+　　　　分区扩容好之后在剩余的unallocated空间上右击新建linux-swap:
+
+　　　　　　1.在新建窗口中的“create as”下拉菜单选择“extended partition”
+
+　　　　　　2.在建好的extended partition中的unallociated空间右击，新建，“create as”选择“linux-swap”即可
+
+　　　　点击上方的应用按钮即可生效。
+
+　　　　然后删除iso光驱，进入虚拟机即可发现根分区已成功扩容

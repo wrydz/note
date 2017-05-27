@@ -1,0 +1,41 @@
+一.配置debian的中文控制台，首先调整文本界面的分辨率。
+   在控制台调整分辨率必须把framebuffer编译进内核，要查看linux是否开启framebuffer，
+   可以查看是否有/dev/fb0  这个设备文件，如果有，说明开启。
+   还有另一种方法：
+   调解分辨率之前，我们要先看一看显卡在控制台下所支持的分辨率，其方法有两种：
+   1.安装  sudo apt-get install hwinfo
+     命令  sudo hwinfo --framebuffer
+     可以查看支持的最大分辨率。
+   2.进入grub控制台，在grub启动菜单按 e 进入编辑，  在grub> 后输入vbeinfo ，也可
+     查看支持的分辨率。
+   接下来，我们修改配置文件，sudo vim /etc/default/grub 
+   去掉#GRUB_GFXMODE=640X480 中的 # ，修改参数为1366x768.再添加
+   GRUB_CMDLINE_LINUX=1366X768.
+   在接下来我们需要修改配置文件  sudo vim /etc/grub.d/00_header
+   按下 ctrl+F 查找 set gfxmode=${GFX_MODE} ,在其下面一行添加
+   set gfxpayload=keep
+   最后更新grub    sudo update-grub
+   重启OK！
+二.分辨率调好了,我们再安装中文输入和显示.
+   sudo aptitude install libucimf ucimf-openvanilla fbterm fbterm-ucimf  
+
+  # 屏蔽除 拼音、五笔 之外的输入法（可选）
+    cd /usr/lib/openvanilla/OVIMGeneric
+    mkdir bak
+    mv *.cin bak/
+    ln -s bak/pinyin* bak/wubizixing2.cin .
+
+# 需要运行 fbterm 的用户，需要执行下面的命令
+# 第一次运行，生成配置文件 ${HOME}/.fbtermrc
+LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8 fbterm -i fbterm_ucimf
+
+# 设置 alias，直接使用 fbterm 调用上面命令 (可选)
+echo "alias fbterm='LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8 fbterm -i fbterm_ucimf'" >> ${HOME}/.bashrc
+. ${HOME}/.bashrc
+
+# 修改默认字体大小 (推荐)
+sed -i "s@font-size=12@font-size=16@g" ${HOME}/.fbtermrc
+
+
+
+

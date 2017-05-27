@@ -1,0 +1,33 @@
+查看数据库的字符集
+
+show variables like 'character\_set\_%';
+
+
+彻底卸载mysql
+
+sudo apt-get --purge remove mysql-server
+sudo apt-get --purge remove mysql-client
+sudo apt-get --purge remove mysql-common
+
+apt-get autoremove
+apt-get autoclean
+
+rm /etc/mysql -R
+rm /var/lib/mysql -R
+
+
+创建数据库指定数据库的字符集
+
+mysql>create database mydb default character set utf-8;#直接指定其编码
+
+直接通过命令进行修改
+
+set character_set_client=utf8;
+
+set character_set_connection=utf8;
+
+set character_set_database=utf8;
+
+set character_set_results=utf8;
+
+set character_set_server=utf8;

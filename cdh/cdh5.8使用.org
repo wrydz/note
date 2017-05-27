@@ -1,0 +1,11 @@
+#+TITLE: 关于CDH5.8的使用
+
+* cloudera配置
+*** 关闭google-analytic
+Cloudrea  Manager页面开启了google-analytics，因为从国内访问很慢，可以关闭google-analytics
+管理 -> 设置 -> 其他 -> 允许使用情况数据收集  不选
+* spark选择
+spark on yarn 和 spark(standalone)
+* impala使用
+*** 命令
+- 跟新元数据 :: invalidate metadata

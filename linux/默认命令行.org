@@ -1,0 +1,5 @@
+打开  /etc/default/grub
+
+GRUB—CMDLINE—LINUX—DEFAULT="quiet splash text"
+
+update-grub

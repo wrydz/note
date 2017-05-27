@@ -1,0 +1,43 @@
+在X环境下，连接投影仪或者其他的显示器，有一个小工具xrandr,其使用如下：
+1.在终端运行
+  wrydz@debian:~$
+    xrandr -q
+    Screen 0: minimum 320 x 200, current 1366 x 768, maximum 16384 x 16384
+    LVDS connected 1366x768+0+0 (normal left inverted right x axis y axis) 310mm x 174mm
+   1366x768      59.98*+
+   1360x768      59.98  
+   1280x768      59.98  
+   1280x720      59.98  
+   1024x768      59.98  
+   1024x600      59.98  
+   800x600       59.98  
+   800x480       59.98  
+   640x480       59.98  
+   DFP1 disconnected (normal left inverted right x axis y axis)
+   CRT1 connected (normal left inverted right x axis y axis)
+   1366x768      59.79 +
+   1360x768      59.79  
+   1280x768      59.79  
+   1280x720      75.00    60.00  
+   1024x768      75.03    60.00  
+   1024x600      75.03    60.00  
+   800x600       75.00    60.32  
+   800x480       75.00    60.32  
+   640x480       75.00    59.94
+
+   LVDS就是笔记本的显示器输出，列出了当前所有可用的信号格式。
+
+   DFP1 disconnected (normal left inverted right x axis y axis)
+   DTP1端口就是笔记本的HDMI端口。
+   CRT1 disconnected (normal left inverted right x axis y axis)
+   CRT1 端口就是笔记本上的VGA端口。
+   下面来实战一下: 以DFP1端口为例。
+   xrandr --output DFP1 --off 关闭HDMI输出
+   xrandr --output DFP1 --same-as LVDS --auto 输出到HDMI端口，信号格式同当前的显示器信号。
+   当然有时候会行不通，可能与HDMI连接的设备不支持当前的信号，这时需要使用下面的命令：
+   xrandr --output DFP1 --same-as LVDS --mode mode名(如1024x768)
+   如何得到mode名呢?
+   使用 xrandr -q 即可！它会在 DFP1下会列出当前该端口所支持的信号模式。
+   最前面一列就是模式名，选择一个即可！
+   xrandr --output 则可以看到相应的帮助信息。
+   同理，把DFP1换成 CRT1，就可以外接投影仪了。

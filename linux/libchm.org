@@ -1,0 +1,5 @@
+chm格式文件转换为html
+1.apt-get install libchm-bin
+
+2.使用
+  extract_chmLib

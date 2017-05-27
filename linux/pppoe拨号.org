@@ -1,0 +1,18 @@
+apt-get install pppoe pppoeconf pppstatus
+
+用pppoeconf配置
+ 
+sudo pppoeconf
+
+
+打开连接
+
+sudo pon dsl-provider
+
+断开链接
+
+sudo poff dsl-provider
+
+查看日志
+
+plog

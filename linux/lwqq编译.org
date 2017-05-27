@@ -1,0 +1,28 @@
+在linux桌面用QQ一直是个很难解决的问题，下面是我在linux下使用过的使用QQ的方式。
+1.wineQQ，在腾讯推出QQ6.*以后，以前的longe就用不了的，不过中国人使用QQ的尽头是谁也阻止不了的，于是wineQQ6.4 , wineQQ6.7就出来了
+  可以下载deb版本的wineQQ，使用dpkg直接安装。
+  这种方式可以较完美的运行QQ，可以使用QQ的基本所有功能，缺点是占用CPU大，且运行有延迟感。
+2.pidgin-lwqq，使用webQQ协议，webQQ有的功能才能实现。现已分离为lwqq,piding-lwqq,先安装lwqq，再安装pidgin-lwqq.
+  lwqq下载地址：git clone https://github.com/xiehuc/lwqq.git
+  pidgin-lwqq下载地址：git clone https://github.com/xiehuc/pidgin-lwqq.git
+  在编译之前需要安装一些依赖。
+  sudo apt-get install build-essential cmake pkg-config libglib2.0-dev libpurple-dev libsqlite3-dev libcurl4-dev libcurl3-dev libmozjs185-dev libmozjs-17.0-dev
+  libmozjs-17.0.dev在debian8上是libmozjs-24.0-dev 编译的时候后包找不到，但好像并不影响使用。
+  编译lwqq:
+  mkdir build
+  cd build
+  cmake ..
+  make
+  sudo make install
+  编译pidgin-lwqq
+  mkdir build
+  cd build
+  cmake ..
+  make
+  sudo make install
+  这时，已经安装完，不过在pidgin上找不到webQQ协议，在编译完lwqq会有个
+  提示--NOTE!! add 'export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH' to ~/.xprofile when need load library from desktop application such as pidgin
+  另一种方法是创建软链接
+  ln -s /usr/local/lib/liblwqq.so /usr/lib/liblwqq.so
+  ln -s /usr/local/lib/liblwqq.so.0 /usr/lib/liblwqq.so.0
+  至此，lwqq就可以使用了！It's very good!

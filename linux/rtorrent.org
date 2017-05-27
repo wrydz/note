@@ -1,0 +1,56 @@
+^o	对选择的 torrent 设置新的下载目录，仅仅对还没有被激活过的 torrent
+^s	开始下载，先运行 hash ，除非已经做过
+^d	停止激活的下载，或者删除一个停止的下载
+^r	初始化 torrent 的 hash 检查
+
+ 
+
+下面这个自觉得是没什么用啦。
+
+ 
+a/s/d	增加上传带宽 1/5/50 KB.
+z/x/c	降低上传带宽 1/5/50 KB.
+A/S/D	增加下载带宽 1/5/50 KB.
+Z/X/C	降低下载带宽 1/5/50 KB.
+
+ 
+
+下面这个还可以，了解一下。
+
+ 
+^q	关闭 rTorrent，再按一次，强行关闭
+上下箭头	选择 torrent
+左键	回到前一个屏幕
+
+ 
+主屏幕视图操作
+
+ 
+向右键	切换到下载视图
+^r	检查 hash
++/-	修改优先度
+l	查看日志，空格退出
+1	显示所有下载
+2	显示所有下载，按文件名排序
+3	显示开始的下载
+4	显示停止的下载
+5	显示完成的下载
+6	显示未完成的下载
+7	显示正在 hash 的下载
+8	显示正在做种的下载
+
+
+rtorrent 缺点是关闭ssh就退出程序
+解决方法利用screen
+
+1：apt-get install screen
+
+2：用下面的命令启动rtorrent 
+   screen rTorrent
+
+3：隐藏rtorrent
+   用组合键 CTRL+A+D  不要是用rtorrent的命令CURL+Q
+
+4：恢复rtorrent
+   screen -r
+

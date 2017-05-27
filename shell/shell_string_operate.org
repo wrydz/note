@@ -1,0 +1,64 @@
+#+TITLE:SHELL字符串的处理
+
+字符串的操作有很多命令，下面介绍其中一种
+${parm},一共有8中用法
+
+0.  ${#str}  获取字符串长度
+
+str='http://www.wrydz.com/cut-string.html'
+1.使用 # 作为操作符,用法为 #*substr ，作用是去掉第一次出现的substr及其左边的字符（从左向右）
+  ${str#*//}  结果：www.wrydz.com/cut-string.html
+
+2.使用 ## 作为操作符，用法为 ##*substr, 作用是去掉最后一次出现的substr极其左边的字符（从左向右）
+  ${str##*/} 结果：cut-string.html
+
+3.使用 % 作为操作符，用法为 %substr* ,作用是去掉第一次出现substr及其右边的字符（从右向左）
+  ${str%//*} = http:
+
+4.使用 %% 作为操作符，用法为 %%substr* , 作用是去掉做后一次出现substr及其右边的字符（从右向左）
+  ${str%%/*} = http:
+
+5.${str:0:5}    0:从第几个字符开始  5：截取字符串的长度
+
+6.${str:4}      从第4个字符到结尾
+
+7.${str:0-15:10}     0-15:表示从右边起第15个字符，10：截取字符串长度
+
+8.${str:0-9}     截取最后9个字符
+
+
+
+一、判断读取字符串值
+
+${var}			变量var的值, 与$var相同
+
+${var-DEFAULT}	如果var没有被声明, 那么就以$DEFAULT作为其值 *
+${var:-DEFAULT}	如果var没有被声明, 或者其值为空, 那么就以$DEFAULT作为其值 *
+ 
+${var=DEFAULT}	如果var没有被声明, 那么就以$DEFAULT作为其值 *
+${var:=DEFAULT}	如果var没有被声明, 或者其值为空, 那么就以$DEFAULT作为其值 *
+ 
+${var+OTHER}	如果var声明了, 那么其值就是$OTHER, 否则就为null字符串
+${var:+OTHER}	如果var被设置了, 那么其值就是$OTHER, 否则就为null字符串
+ 
+${var?ERR_MSG}	如果var没被声明, 那么就打印$ERR_MSG *
+${var:?ERR_MSG}	如果var没被设置, 那么就打印$ERR_MSG *
+ 
+${!varprefix*}	匹配之前所有以varprefix开头进行声明的变量
+${!varprefix@}	匹配之前所有以varprefix开头进行声明的变量
+
+二、字符串操作（长度，读取，替换）
+${#string}					$string的长度
+
+${string:position}			在$string中, 从位置$position开始提取子串
+${string:position:length}	在$string中, 从位置$position开始提取长度为$length的子串
+ 
+${string#substring}			从变量$string的开头, 删除最短匹配$substring的子串
+${string##substring}		从变量$string的开头, 删除最长匹配$substring的子串
+${string%substring}			从变量$string的结尾, 删除最短匹配$substring的子串
+${string%%substring}		从变量$string的结尾, 删除最长匹配$substring的子串
+ 
+${string/substring/replacement}		使用$replacement, 来代替第一个匹配的$substring
+${string//substring/replacement}	使用$replacement, 代替所有匹配的$substring
+${string/#substring/replacement}	如果$string的前缀匹配$substring, 那么就用$replacement来代替匹配到的$substring
+${string/%substring/replacement}	如果$string的后缀匹配$substring, 那么就用$replacement来代替匹配到的$substring

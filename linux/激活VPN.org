@@ -1,0 +1,5 @@
+相信很多用过kali的都知道他VPN默认是无法使用的，需要我们自己去激活，只要我们执行如下命令，你就会发现他可以使用了。 PS：只为照顾新手，大牛请飘过
+ 
+sudo apt-get install pptpd network-manager-openvpn  network-manager-openvpn-gnome network-manager-pptp network-manager-pptp-gnome network-manager-strongswan network-manager-vpnc network-manager-vpnc-gnome 
+
+ 

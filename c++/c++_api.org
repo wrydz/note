@@ -1,0 +1,31 @@
+C++函数手册:
+
+在线手册:
+
+http://gcc.gnu.org/onlinedocs/
+
+http://www.cplusplus.com/reference/
+
+离线手册:
+
+sudo apt-get -y install libstdc++6-4.6-doc
+
+file:///usr/share/doc/libstdc++6-4.6-doc/libstdc++/html/index.html
+
+Google Site在线搜索:
+
+http://www.google.com.tw/#newwindow=1&q=site:www.cplusplus.com%2Freference%2F+vector
+
+像man一样查看手册cppman:
+
+https://github.com/aitjcize/cppman
+
+sudo apt-get install python-pip vim
+
+sudo pip install cppman
+
+cppman cout
+
+cppman用法类似man,查询时能自动从cplusplus.com下载对应内容并转换成man pages.
+
+cppman -c 从cplusplus.com上下载所有手册,耗时较长,但方便离线查看,不过一般是不需要的.

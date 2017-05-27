@@ -1,0 +1,53 @@
+vim中删除^M(C-v C-m)
+:%s/^M$//g      去掉所有的^M
+
+% : 代表全部匹配
+s : 替换
+$ : 匹配到行尾
+g : 替换没一个匹配到的
+
+* 显示换行
+如果你使用以下命令进入<list mode>，那么就可以清楚的看到以“$”表示的换行符和以“^I”表示的制表符。
+:set list
+vi下显示回车换行符等特殊符号 - 有何不可 - 不要辜负 期望
+你可以使用以下命令退出<list mode>：
+:set nolist
+* 删除换行
+可以用以下命令删除换行符：
+:%s/\n//g
+可以用以下命令删除DOS文件中的回车符“^M”：
+:%s/\r//g
+可以用以下命令转换DOS回车符“^M”为真正的换行符：
+:%s/\r/\r/g
+可以用以下命令删除行尾的空格以及DOS回车符。它没有使用“/”字符作为替换命令各个参数间的分隔符，而是使用了“#”字符。命令还使用了“\?”正则表达式，用来匹配它前面出现的字符0次或1次。
+:%s#\s*\r\?$##
+可以用以下命令删除三行空行：
+:%s/^\n\{3}//
+可以用以下命令将连续的两个空行替换成一个空行：
+:%s/\n\n/\r/g
+* 设置文件结尾
+在默认情况下，Vim认为文件是由行组成的，并且文件最后一行是以<EOL>为结束符的。如果你想设置文件以<EOL>结束符结尾，则可以用以下命令：
+:set endofline
+如果你想设置文件不以<EOL>结束符来结尾，则可以使用以下命令：
+:set noendofline
+
+文件格式转换(dos,unix)
+* vim
+查看当前格式
+:set fileformat
+设置：
+:set fileformat=unix|dos
+
+* emacs
+M-x set-buffer-file-coding-system
+
+tr替换，dos->unix
+tr -d ‘\r’< dosfile.txt > unixfile.txt
+
+* sed
+DOS转UNIX：$ sed ‘s/.$//’dosfile.txt > unixfile.txt
+UNIX转DOS：$ sed ’s/$/\r/’unixfile.txt > dosfile.txt
+
+* prel
+DOS转UNIX：perl -p -e ‘s/\r$//’< dosfile.txt > unixfile.txt
+UNIX转DOS：perl -p -e ‘s/$/\r/’< unixfile.txt > dosfile.txt

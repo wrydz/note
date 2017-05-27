@@ -1,0 +1,3 @@
+#+TITLE: Common
+
+shell的默认配置文件在/etc/skel

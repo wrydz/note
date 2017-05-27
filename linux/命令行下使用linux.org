@@ -1,0 +1,3 @@
+acpi -b      命令行下查看电量
+evene  *.pdf    命令行看pdf文件
+eog *.png      命令行下查看图片

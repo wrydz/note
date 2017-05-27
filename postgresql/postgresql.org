@@ -1,0 +1,54 @@
+postgresql是一种关系型数据库。对于类型的支持据说是最丰富的。
+
+mysql和psql命令的区别
+(1)列出所有的数据库
+mysql: show databases
+psql: \l或\list
+(2)切换数据库
+mysql: use dbname
+psql: \c dbname
+
+(3)列出当前数据库下的数据表
+mysql: show tables
+psql: \d
+
+(4)列出指定表的所有字段
+mysql: show columns from table name
+psql: \d tablename
+
+(5)查看指定表的基本情况
+mysql: describe tablename
+psql: \d+ tablename
+
+(6)退出登录
+mysql: quit 或者\q
+psql:\q
+
+对于在shell中使用psql，可用如下方式：
+
+psql -h 133.37.31.56 -p 5432 -U postgres <<SQL
+\c postgis_sc
+drop table test2;
+CREATE TABLE test2(
+test varchar(10)
+)
+\q
+SQL
+
+-h ip地址  -p 端口 -U 用户名 -d 数据库
+
+在这里有一个问题是，每次运行脚本会让你输入密码，我的解决方法是：在当前用户主目录下建立
+.pgpass 文件，并在文件中输入如下格式的内容：
+ip:端口:数据库:用户名:密码
+
+在启动psql时，会在密码文件中使用于当前参数最匹配的行
+
+密码文件权限必须是0600,psql才会使用。
+chomd 0600 .pgpass
+
+
+在postgresql创建表后，建索引
+CREATE INDEX highway_buffer_geom_idx
+ON public.highway_buffer
+USING gist
+(geom);

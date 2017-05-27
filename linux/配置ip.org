@@ -1,0 +1,30 @@
+配置静态ip地址
+
+1.cd /etc/network
+
+
+2.vim interface
+
+auto eth0
+iface eth0 inet static
+address 192.168.2.2
+netmask 255.255.255.0
+gateway 192.168.2.1
+
+设置网卡eth0设置为DHCP类型
+iface eth0 inet dhcp
+
+3.重启网络
+
+sudo /etc/init.d/networking restart
+
+
+4.设置DNS（必须设置.否则无法访问任何URL）
+vi /etc/resolv.conf
+
+修改为你所需要设置的DNS的ip地址。
+
+nameserver 8.8.8.8
+nameserver 202.96.128.86
+
+重启系统后即可生效。

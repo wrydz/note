@@ -1,0 +1,21 @@
+﻿grub2  ：
+ 
+vim /etc/default/grub
+  
+把GRUB_GFXMODE=640X480 前的 # 号去掉  
+在把640x480  改为   需要的分辨率  1366x768
+添加 GRUB_CMDLINE_LINUX="1366X768"    必须改  不然出错
+
+
+vim /etc/grub.d/00_header
+
+找到set gftmode=${GRUB_GFXMODE}  在下一行添加
+
+set gfxpayload=keep
+
+
+修改grub2的背景：
+ 
+vim /usr/share/desktop-base/grub_background.sh
+
+WALLPAPER后面的就是背景  

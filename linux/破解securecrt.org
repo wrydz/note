@@ -1,0 +1,8 @@
+破解securecrt：
+scrt的安装目录默认 /usr/bin/SecureCRT
+运行破解脚本 sudo perl securecrt_linux_crack.pl /usr/bin/SecureCRT 
+若报错没有root权限
+则需要把 /usr/bin/SecureCRT 移动到 /tmp/SecureCRT
+在运行脚本   sudo perl securecrt_linux_crack.pl /tmp/SecureCRT
+
+若执行脚本成功，显示successfull，再填写注册信息就破解OK了。

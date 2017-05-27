@@ -1,0 +1,1 @@
+grub启动时  按e   输入vbeinfo  显示可用分辨率

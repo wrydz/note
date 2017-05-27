@@ -1,0 +1,16 @@
+#+TITLE: centos集群安装cdh5.9
+
+* 前言
+项目中有可能会用到，准备现在自己电脑上熟悉一下cdh5.9的安装部署，基本配置如下
+#+BEGIN_SRC text
+主机:            debian8
+虚拟机:          virtualbox
+虚拟机管理工具:   vagrant
+宿主机:          centos7 （4台）
+#+END_SRC
+
+* centos
+
+** centos安装
+
+** centos配置

@@ -1,0 +1,5 @@
+在终端连线openconnect
+
+openconnect 域名
+
+openconnect --user=username@wlan.nthu.edu.tw --authgroup=wlan.nthu.edu.tw sslvpn.twaren.net

@@ -1,0 +1,3 @@
+Ctrl Alt D      显示桌面
+Ctrl Alt T      终端
+Ctrl Alt R      chrome浏览器

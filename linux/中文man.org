@@ -1,0 +1,7 @@
+root# apt-get install manpages-zh  #安装man中文包
+
+root# cp /etc/manpath.config /etc/manpath.config.bak #配置文件做好备份
+
+root# vim /etc/manpath.config  ##将配置文件里面所有/usr/share/man换成/usr/share/man/zh_CN
+
+  ##：g/\/usr\/share\/man/s//\/usr\/share\/man\/zh_CN/g

@@ -1,0 +1,30 @@
+批量解压的方法：
+ 
+建立脚本文件：
+
+touch untar.sh
+
+chmod +x untar.sh
+
+
+编写脚本：
+
+vim untar.sh
+
+
+内容如下：
+
+#!/bin/bash
+
+LS='ls *.bz2'
+DIC="/usr/share/stardict/dic"    //解压的路径
+ 
+for i in $LS
+do
+echo $i
+tar jxvf $i -C $DIC
+done
+
+
+执行脚本：
+sudo sh untar.sh

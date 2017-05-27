@@ -1,0 +1,38 @@
+#+TITLE: 关于双系统的一些问题
+
+* 时间设置
+windows 没时区，系统时间与BIOS时间相同。
+
+debian，包括其它GUN/Linux系统有时区的概念，于是系统有两个时间，GMT(UTC) 及本地时间。
+默认情况，debian使用UTC时间，启动后读取BIOS时间作为UTC时间，然后根据时区算出系统时间（date 命令输出），比如BIOS时间为00:00，系统时区设置为北京，东8区，则系统时间为08:00
+
+当debian与windows共存时就会出现时间不一致情况，为避免此问题，可以设置debian不使用UTC时间，即直接将BIOS时间作为系统时间，执行如下命令并重启系统即可：
+
+hwclock -w --localtime
+
+命令修改了/etc/adjtime文件，不建议手动修改此文件。
+
+
+2.
+sudo gedit /etc/default/rcS
+
+* 启动顺序
+
+基于debian系的linux系统，
+
+** 修改/boot/grub/grub.cfg
+#+BEGIN_SRC shell
+  # add w premissions
+  sudo chmod +w /boot/grub/grub.cfg
+  #
+  sudo vim /boot/grub/grub.cfg
+
+  set default = "0"
+
+  # 其中0代表启动页面第一项
+
+  # 关闭写权限
+  sudo chomd -w /boot/grub/grub.cfg
+#+END_SRC
+
+

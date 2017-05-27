@@ -1,0 +1,39 @@
+Fbterm 还提供了虚拟终端的支持：
+Ctrl Alt c :  创建新的虚拟终端
+Shift Left  :  移动到上一个虚拟终端
+Shift Right  :  移动到下一个虚拟终端
+Ctrl Alt 数字 : 移动到第 n 个虚拟终端
+另外，还有翻页的能力：
+Shitf Page Up : 向上翻页
+Shitf Page Down : 向下翻页
+
+
+
+
+4.常见问题FAQ
+1).第一次运行，出现下面的错误信息提示并且输入法不能启动（或者只有root用户正常）
+[input] can't change kernel keymap table, all shortcuts will NOT work,  see SECURITY NOTES section of man page for solution.
+解法1) setuid (適用一般狀況)
+chmod u+s /usr/bin/fbterm
+解法2) setcap (適用於 Kernel >= 2.6.27 )
+sudo setcap 'cap_sys_tty_config+ep' /usr/bin/fbterm
+
+2).需要运行 fbterm 的用户，需要执行下面的命令
+LANG=zh_CN.UTF-8
+fbterm -i fbterm_ucimf
+
+# 设置 alias，直接使用 fbterm 调用上面命令 (可选)
+echo "alias fbterm='LANG=zh_CN.UTF-8 LC_ALL=zh_CN.UTF-8 fbterm -i fbterm_ucimf'" >> ${HOME}/.bashrc
+. ${HOME}/.bashrc
+
+# 修改默认字体大小 (推荐)
+在$HOME/.fbtermrc里面即可找到
+font-size=16
+font-names=
+
+查看字体 
+fc-list
+
+这一行，将后面的数字改为自己想要的即可，推荐将字体大小改为16。
+
+设置文件一个是主目录下的.fbtermrc，一个是/etc/ucimf.conf

@@ -1,0 +1,124 @@
+﻿在linux下，若想使用c++连接数据库，有很多中方法。
+例如 mysql 数据库，它提供了函数直接操作数据库。我们只需要在包含 <mysql.h>,并且编译时 -ld path。path是mysql客户端的安装路径。
+
+那么要连接多种数据库，我们可以使用odbc，他使用于大多数数据库。
+
+1.在debian中，我们可以直接通过包管理器直接安装。
+  apt-get install unixodbc unixodbc-dev
+  centos:
+  yum install unixODBC unixODBC-devel libtool-ltdl libtool-ltdl-devel
+2.安装mysql数据库驱动
+  apt-get install libmyodbc
+  安装postgresql数据库驱动
+  apt-get install odbc-postgresql
+  centos安装mysql数据库驱动
+  yun install mysql-connector-odbc
+3.配置
+UNIXODBC的配置文件主要是/etc/odbcinst.ini以及/etc/odbc.ini。
+前者用于配置驱动程序，后者，正如上文所述，用于保存系统DSN。
+刚才安装了MySQL的驱动程序，需要把它的配置信息填写到 vi /etc/odbcinst.ini内。
+现在打开你所喜爱的编辑器，编辑 vi /etc/odbcinst.ini：
+[MySQL]
+Description     = MySQL driver for Linux
+Driver          = /usr/lib/odbc/libmyodbc.so
+Setup           = /usr/lib/odbc/libodbcmyS.so
+FileUsage       = 1
+配置信息依次是驱动程序描述、驱动程序位置、配置程序位置、驱动程序使用次数。
+实际的驱动程序位置依Linux发行版的不同而有所差异。
+Ubuntu通常位于/usr/lib/odbc/下。Suse位于/usr/lib/unixODBC/。RedHat等发行版可能有所不同。
+然后是配置DSN，接下来我们创建一个名为AsteriskDB的DSN。编辑/etc/odbc.ini文件
+[AsteriskDB]
+Description = The Database for Asterisk
+Trace       = On
+TraceFile   = stderr
+Driver      = MySQL
+SERVER      = localhost
+USER        = root
+PASSWORD    = mypassword
+PORT        = 3306
+DATABASE    = asterisk
+在配置文件里，DSN的名字即为Section的名字。在配置信息中，有一部分配置项是ODBC使用的，另一部分则由驱动程序处理。下面几个是由ODBC使用的配置项：
+Description                 描述信息
+Trace                       是否跟踪SQL语句。有“On”和“Off”两种值
+TraceFile                   如果跟踪SQL语句。将跟踪信息保存到何文件中。如果填写stderr就会打印到标准输出
+Driver                      在/etc/odbcinst.ini里配置的驱动程序名字。
+配置文件里的“SERVER”、“USER”等信息是MySQL驱动程序使用的信息。这里有一些示例：
+[PostgreSQL]
+Description         = Test to Postgres
+Driver              = PostgreSQL
+Trace               = Yes
+TraceFile           = sql.log
+Database            = nick
+Servername          = localhost
+UserName            =
+Password            =
+Port                = 5432
+Protocol            = 6.4
+ReadOnly            = No
+RowVersioning       = No
+ShowSystemTables    = No
+ShowOidColumn       = No
+FakeOidIndex        = No
+ConnSettings        =
+
+[Mini SQL]
+Description     = MiniSQL
+Driver          = MiniSQL
+Trace           = No
+TraceFile       =
+Host            = localhost
+Database        =
+ConfigFile      =
+
+[MySQL-test]
+Description     = MySQL test database
+Trace       = Off
+TraceFile   = stderr
+Driver      = MySQL
+SERVER      = 192.168.1.26
+USER        = pharvey
+PASSWORD    =
+PORT        = 3306
+DATABASE    = test
+
+[nntp Data Source]
+Description     = nntp Driver
+Driver          = nntp Driver
+Trace           = No
+TraceFile       =
+Host            = localhost
+Database        =
+Port            =
+
+[FreeTDS driver]
+Driver = TDS
+Description = Northwind sample database
+Trace = No
+Server = 192.168.1.25
+Database = Northwind
+UID = sa
+
+[Sybase SQL Anywhere 5.0]
+Driver=Sybase SQL Anywhere 5.0
+Description=Sybase SQL Anywhere 5.0 ODBC Driver
+Userid=dba
+Password=sql
+DatabaseFile=sademo.db
+如果操作完全正确的话，现在ODBC已经成功了。可以试下isql命令操作刚配置的DSN。
+$ isql asteriskdb
++---------------------------------------+
+| Connected!                            |
+|                                       |
+| sql-statement                         |
+| help [tablename]                      |
+| quit                                  |
+|                                       |
++---------------------------------------+
+SQL> show tables;
++-----------------------------------------------------------------+
+| Tables_in_asterisk                                              |
++-----------------------------------------------------------------+
++-----------------------------------------------------------------+
+SQLRowCount returns 0
+SQL>
+这个命令行界面与mysql命令类似，可以进行各种数据库操作。至此，UNIXODBC已经安装成功了。

@@ -1,0 +1,4 @@
+xfce4桌面中，若想使用右键svn，
+需要安装文件管理器(thunar)的插件
+
+sudo apt-get install thunar-vcs-plugin

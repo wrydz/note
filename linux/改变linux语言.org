@@ -1,0 +1,11 @@
+#+TITLE:更改系统默认语言
+
+由于有时候为了省事将Ubuntu安装成中文版，而在终端中中文会显示乱码，因此需要将默认语言改为英文。
+用vi(或nano等文本编辑器)打开 /etc/default/locale 文件
+将原来的配置内容修改为
+LANG=”en_US.UTF-8″
+LANGUAGE=”en_US:en”
+再在终端下运行：
+locale-gen -en_US:en
+注销或重启后，即可恢复为英文的语言环境。
+

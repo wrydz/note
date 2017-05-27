@@ -1,0 +1,36 @@
+#+TITLE: Variables
+
+变量说明
+
+$$
+Shell本身的PID（ProcessID）
+$!
+Shell最后运行的后台Process的PID
+$?
+最后运行的命令的结束代码（返回值）
+$-
+使用Set命令设定的Flag一览
+$*
+所有参数列表。如"$*"用「"」括起来的情况、以"$1 $2 … $n"的形式输出所有参数。
+$@
+所有参数列表。如"$@"用「"」括起来的情况、以"$1" "$2" … "$n" 的形式输出所有参数。
+$#
+添加到Shell的参数个数
+$0
+Shell本身的文件名
+$1～$n
+添加到Shell的各参数值。$1是第1参数、$2是第2参数…。
+
+函数中使用return 和 echo 返回值的区别:
+return:是shell的状态值,最大不超过255
+当需要返回的值大于255时,用echo输出到变量的方式
+例如:
+TEST(){
+	read -p "请输入一个数:" a
+	echo $a
+	return $a
+}
+
+return=`TEST`
+echo $?
+echo $return

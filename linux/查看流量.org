@@ -1,0 +1,12 @@
+1.iftraf
+
+2.nload
+
+3.ifstat
+
+4.sar
+
+命令：
+watch more /proc/net/dev
+
+watch ifconfig

@@ -1,0 +1,85 @@
+mac 重装及软件安装
+* 重装
+** Command + R , 抹盘, 重装
+需要网络好，需要下载镜像文件
+** 启动
+*** 填写 Apple ID
+*** 配置 Siri
+*** 新增用户 wrydz
+** 系统更新以及升级
+
+* 配置
+** app Store 商店
+*** 微信
+*** QQ
+*** 网易云音乐
+*** 爱奇艺
+
+** 安装 xcode
+sudo xcode-select --install
+
+** 安装配置 zsh
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+** shadowsocksx-ng
+登陆 github 搜寻 shadowsocksx-ng
+** google
+安装后并登陆 google 账号，同步相关信息到本地
+
+** homebrew
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/usr/bin/ruby -e "$(curl -fsSL--insecure raw.githubusercontent.com/Homebrew/install/master/install)"
+*** brew cask
+brew tap caskroom/cask
+
+** emacs
+*** 下载 emacs for osx 安装包并安装
+*** git spacemacs 和 私人的 配置到本地
+*** 启动并初始化 spacemacs
+*** 安装字体 Source Code Pro
+brew tap caskroom/fonts
+~brew cask install font-source-code-pro~
+
+** 配置 ssh key 
+   在本地管理多个 ~ssh key~ 
+*** 生成不同的密钥
+~ssh-keygen -t rsa -f ~/.ssh/id_rsa.别名 -C "邮箱地址"~
+*** 在 .ssh 目录创建 config 文件
+Host github  -- 别名
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_rsa.github
+
+*** 测试
+~ssh -T github~
+
+** 安装 idea
+*** 在官网下载最新版本的软件
+*** 使用 ~lanyu~ 激活
+1. 登陆 ~http://idea.lanyus.com/~ 复制注册码
+2. 在 ~/etc/hosts~ 文件末尾添加 ~http://idea.lanyus.com/~
+   
+** jdk1.8
+官网下载
+
+** 更新 bash 版本
+
+** aria2
+
+** cheatsheet
+
+** 允许第三方源
+sudo spctl --master-disable
+
+** parallels
+安装 win7 部分软件字体变得很小，可以将分辨率选为缩放
+
+** cornerstone
+
+** cleanmymac
+
+** jump desktop
+
+** anaconda
+
+** folx
